@@ -13,31 +13,23 @@
 # $ git difftool foo bar # This should work as -t vimdiff
 
 dirdiff() {
-    left=$1
-    right=$2
-    tmp=${1%%/left*}
-    vimcmdsfile="$tmp/vimcommands.vim"
-
-    left_files=( $left/**/*(.N) )
-    right_files=( $right/**/*(.N) )
+    cd ${1%%/left*}
+    vimcmdsfile="vimcommands.vim"
 
     # If the following test is true then either $right only contains symlinks
     # which means that we are diffing against the working tree. We do not set
     # readonly on those buffers in order to keep modifications, then. The alternative
     # is that directory is empty because it should be (empty side of the diff).
     # The autocmd will pick up the slack in that case
+    right_files=( right/**/*(.N) )
     if (( ! $#right_files )); then
         per_tab_ro_cmds='wincmd h | setlocal readonly'
-        right_files=( $right/**/*(-.N) ) # Grab the symlinks instead
     else
         per_tab_ro_cmds='windo setlocal readonly | wincmd h'
     fi
 
-    right_files=( ${right_files[@]#$right/} )
-    left_files=( ${left_files[@]#$left/} )
-
-    all_files=( $left_files[@] $right_files[@] )
-    all_files=( ${(u)all_files[@]} )
+    all_files=( left/**/*(-.N) right/**/*(-.N) )
+    all_files=( ${(u)all_files[@]#*/} )
 
     {
     # If a file doesn't exist, diff against /dev/null instead. This is what
@@ -47,16 +39,14 @@ dirdiff() {
     print 'augroup END'
 
     for f in $all_files[@]; do
-        printf 'tabnew %s | vsplit %s\n' $left/$f $right/$f
+        printf 'tabnew %s | vsplit %s\n' left/$f right/$f
         print 'windo diffthis'
         print $per_tab_ro_cmds
     done
 
     print 'autocmd! vdwrap'
 
-    print 'tabfirst'
-    print 'tabclose'
-    print "cd $tmp"
+    print 'tabfirst | tabclose'
     } \
     > $vimcmdsfile
     vim -c "silent source $vimcmdsfile"
