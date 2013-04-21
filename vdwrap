@@ -16,11 +16,9 @@ dirdiff() {
     cd ${1%%/left*}
     vimcmdsfile="vimcommands.vim"
 
-    # If the following test is true then either $right only contains symlinks
-    # which means that we are diffing against the working tree. We do not set
-    # readonly on those buffers in order to keep modifications, then. The
-    # alternative is that directory is empty because it should be (empty side
-    # of the diff). The autocmd will pick up the slack in that case
+    # If the following test is true then either right/ is empty or it only
+    # contains symlinks meaning that we are diffing against the work tree. We
+    # don't set readonly on those buffers in order to keep modifications.
     right_files=( right/**/*(.N) )
     if (( $#right_files )); then
         per_tab_ro_cmds='windo setlocal readonly | wincmd h'
