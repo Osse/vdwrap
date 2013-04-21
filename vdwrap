@@ -1,17 +1,5 @@
 #!/usr/bin/env zsh
 
-# Configuration:
-# $ git config --global diff.tool vdwrap
-# If you don't put vdwrap somewhere in $PATH then either:
-# $ git config --global difftool.vdwrap.cmd '/full/path/vdwrap $LOCAL $REMOTE'
-# or:
-# $ git config --global difftool.vdwrap.cmd 'vdwrap $LOCAL $REMOTE'
-# $ git config --global difftool.vdwrap.path '/full/path'
-#
-# Usage:
-# $ git difftool --dir-diff foo bar
-# $ git difftool foo bar # This should work as -t vimdiff
-
 dirdiff() {
     cd ${1%%/left*}
     vimcmdsfile="vimcommands.vim"
