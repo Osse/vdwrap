@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
 
 dirdiff() {
+    # cd to the temporary directory immediately to make things simpler
     cd ${1%%/left*}
     vimcmdsfile="vimcommands.vim"
 
-    # If the following test is true then either right/ is empty or it only
+    # If the following test is false then either right/ is empty or it only
     # contains symlinks meaning that we are diffing against the work tree. We
     # don't set readonly on those buffers in order to keep modifications.
     right_files=( right/**/*(.N) )
@@ -40,8 +41,9 @@ dirdiff() {
 }
 
 # Hacky way getting the default vimdiff behaviour. TODO: Can it be prettied
-# without hardcoding what vim command it ends up executing? (Which by the way
-# is `vim -R -f -d -c 'wincmd l' -c 'cd $GIT_PREFIX' "$@"`)
+# without hardcoding what vim command it ends up executing (Which by the way
+# is `vim -R -f -d -c 'wincmd l' -c 'cd $GIT_PREFIX' "$@"`) ? Should I remove
+# it and just ask people to use an alias instead?
 regulardiff() {
     gitexecpath="$(git --exec-path)"
     export PATH=$gitexecpath:$PATH
@@ -51,7 +53,7 @@ regulardiff() {
 }
 
 # If there are only two arguments and both are directories then --dir-diff has
-# been given to 'git difftool'. Otherwise we use vimdiff like usual
+# been given to 'git difftool'. Otherwise we use vimdiff us usual.
 if [[ -d $1 && -d $2 && -z $3 ]]
 then
     dirdiff "$@"
