@@ -10,7 +10,7 @@ vimdiff only once and you will see each file pair in its own tab.
 Configuration:
 --------------
 
-Either you can configure this as your git difftool staright up, or you can use
+Either you can configure this as your git difftool straight up, or you can use
 it only when using --dir-diff. When used not with --dir-diff it tries its best
 to invoke vimdiff the same way git difftool would have done anyway. I haven't
 noticed any problems but it is a bit hacky.
@@ -49,5 +49,5 @@ Alternatively, using the alias:
 $ git dirdiff foo bar
 $ git difftool foo bar
 
-Since difftool --dir-diff is longwinded you may want to define an alias anyway,
+Since difftool --dir-diff is long-winded you may want to define an alias anyway,
 so it makes sense to not use vdwrap as your standard difftool.
