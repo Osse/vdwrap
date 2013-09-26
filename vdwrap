@@ -8,14 +8,14 @@ dirdiff() {
     # If the following test is false then either right/ is empty or it only
     # contains symlinks meaning that we are diffing against the work tree. We
     # don't set readonly on those buffers in order to keep modifications.
-    right_files=( right/**/*(.N) )
+    right_files=( right/**/*(.ND) )
     if (( $#right_files )); then
         per_tab_ro_cmds='windo setlocal readonly | wincmd h'
     else
         per_tab_ro_cmds='wincmd h | setlocal readonly'
     fi
 
-    all_files=( left/**/*(-.N) right/**/*(-.N) )
+    all_files=( left/**/*(-.ND) right/**/*(-.ND) )
     all_files=( ${(u)all_files[@]#*/} )
 
     {
