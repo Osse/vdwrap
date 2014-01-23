@@ -26,7 +26,7 @@ dirdiff() {
     print 'augroup END'
 
     for f in $all_files; do
-        printf 'tabnew %s | vsplit %s\n' left/$f right/$f
+        printf 'tabnew %q | vsplit %q\n' left/$f right/$f
         print 'windo diffthis'
         print $per_tab_ro_cmds
     done
