@@ -1,4 +1,4 @@
-#vdwrap
+# vdwrap
 
 A simple wrapper around Vimdiff for diffing directory hierarchies with `git
 difftool --dir-diff`. It is a Zsh script, so you need that installed.
@@ -6,7 +6,7 @@ difftool --dir-diff`. It is a Zsh script, so you need that installed.
 With `vdwrap` instead of launching `vimdiff` once per pair of files Git will
 launch it only once and you will see each pair in its own tab.
 
-##Configuration:
+## Configuration:
 
 You can configure this as your Git difftool straight up, or you can use it only
 in combination with `--dir-diff`. When used without `--dir-diff` it tries its
@@ -31,7 +31,7 @@ with `--dir-diff` you can define an alias, e.g.:
 
     git config --global alias.dirdiff 'difftool --tool vdwrap --dir-diff'
 
-##Usage:
+## Usage:
 
 If you configure `vdwrap` as your difftool you do:
 	
